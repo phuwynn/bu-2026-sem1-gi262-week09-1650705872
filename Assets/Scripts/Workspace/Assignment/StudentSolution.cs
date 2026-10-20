@@ -19,7 +19,7 @@ namespace Assignment
             Stack<int> stack = new Stack<int>();
             stack.Push(1);
             stack.Push(2);
-            stack.Push(3);//àÍÒÍÍ¡
+            stack.Push(3);//ï¿½ï¿½ï¿½ï¿½Í¡
 
             int count = stack.Count;
             Debug.Log($"Count: {count}");
@@ -101,12 +101,52 @@ namespace Assignment
 
         public string ASN01_ReverseString(string str)
         {
-            throw new NotImplementedException();
+             if (string.IsNullOrEmpty(str))
+            {
+                return "";
+            }
+ 
+            Stack<char> stack = new Stack<char>();
+            for (int i = 0; i < str.Length; i++)
+            {
+                stack.Push(str[i]);
+            }
+ 
+            char[] reversed = new char[stack.Count];
+            for (int i = 0; i < reversed.Length; i++)
+            {
+                reversed[i] = stack.Pop();
+            }
+ 
+            string result = new string(reversed);
+            Debug.Log($"Reversed: {result}");
+            return result;
         }
 
         public bool ASN02_StackPalindrome(string str)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(str))
+            {
+                return true;
+            }
+ 
+            Stack<char> stack = new Stack<char>();
+            for (int i = 0; i < str.Length; i++)
+            {
+                stack.Push(str[i]);
+            }
+ 
+            for (int i = 0; i < str.Length; i++)
+            {
+                char popped = stack.Pop();
+                Debug.Log($"Compare: {str[i]} and {popped}");
+                if (str[i] != popped)
+                {
+                    return false;
+                }
+            }
+ 
+            return true;
         }
 
         #endregion
@@ -115,7 +155,41 @@ namespace Assignment
 
         public bool EX01_ParenthesesChecker(string str)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(str))
+            {
+                return true;
+            }
+ 
+            Stack<char> stack = new Stack<char>();
+ 
+            for (int i = 0; i < str.Length; i++)
+            {
+                char c = str[i];
+ 
+                if (c == '(' || c == '[' || c == '{')
+                {
+                    stack.Push(c);
+                }
+                else if (c == ')' || c == ']' || c == '}')
+                {
+                    if (stack.Count == 0)
+                    {
+                        return false;
+                    }
+ 
+                    char open = stack.Pop();
+                    bool isPair = (open == '(' && c == ')') ||
+                                  (open == '[' && c == ']') ||
+                                  (open == '{' && c == '}');
+ 
+                    if (!isPair)
+                    {
+                        return false;
+                    }
+                }
+            }
+ 
+            return stack.Count == 0;
         }
 
         #endregion
